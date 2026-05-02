@@ -2,20 +2,25 @@ import { useEffect, useState } from 'react'
 import './SpotifyNowPlaying.css'
 
 /**
- * Shows the track currently playing on Spotify.
+ * Spotify now playing via `/api/spotify-now-playing`.
  *
- * Set `VITE_SPOTIFY_NOW_PLAYING_URL` in `.env` to a URL you control that
- * returns JSON (browser must be allowed by CORS). Typical setup: a small
- * serverless function that calls Spotify’s Web API with a refresh token and
- * returns a simplified payload.
+ * Server env (never expose `client_secret` / `refresh_token` to the client):
+ *   SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN
  *
- * Supported JSON shapes:
- * - `{ title, artist, url, image, isPlaying }` (camelCase)
- * - `{ track, artists, songUrl, albumImage, isPlaying }` (common alternates)
- * - Raw Spotify `currently-playing` response (`item`, `is_playing`)
+ * Dev: Vite middleware reads them from `.env` / `.env.local`.
+ * Prod: deploy `api/spotify-now-playing.js` (e.g. Vercel) with the same vars.
+ *
+ * Optional: `VITE_SPOTIFY_NOW_PLAYING_URL` to point at another absolute URL.
+ * Refresh token needs `user-read-currently-playing` (and usually `user-read-playback-state`).
  */
 
 const POLL_MS = 30_000
+
+function resolveNowPlayingUrl() {
+  const fromEnv = import.meta.env.VITE_SPOTIFY_NOW_PLAYING_URL?.trim()
+  if (fromEnv) return fromEnv
+  return '/api/spotify-now-playing'
+}
 
 function normalizeTrack(data) {
   if (!data || typeof data !== 'object') return null
@@ -59,14 +64,12 @@ function normalizeTrack(data) {
 }
 
 export function SpotifyNowPlaying() {
-  const apiUrl = import.meta.env.VITE_SPOTIFY_NOW_PLAYING_URL
+  const apiUrl = resolveNowPlayingUrl()
   const [loading, setLoading] = useState(Boolean(apiUrl))
   const [track, setTrack] = useState(null)
   const [idle, setIdle] = useState(false)
 
   useEffect(() => {
-    if (!apiUrl) return
-
     let cancelled = false
 
     const load = async () => {
@@ -113,15 +116,6 @@ export function SpotifyNowPlaying() {
   }, [apiUrl])
 
   const body = (() => {
-    if (!apiUrl) {
-      return (
-        <>
-          <p className="spotify-now__label">Spotify</p>
-          <p className="spotify-now__track">Now playing</p>
-          <p className="spotify-now__artist">Add VITE_SPOTIFY_NOW_PLAYING_URL</p>
-        </>
-      )
-    }
     if (loading) {
       return (
         <>
