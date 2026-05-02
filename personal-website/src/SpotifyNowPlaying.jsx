@@ -1,19 +1,6 @@
 import { useEffect, useState } from 'react'
 import './SpotifyNowPlaying.css'
 
-/**
- * Spotify now playing via `/api/spotify-now-playing`.
- *
- * Server env (never expose `client_secret` / `refresh_token` to the client):
- *   SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN
- *
- * Dev: Vite middleware reads them from `.env` / `.env.local`.
- * Prod: deploy `api/spotify-now-playing.js` (e.g. Vercel) with the same vars.
- *
- * Optional: `VITE_SPOTIFY_NOW_PLAYING_URL` to point at another absolute URL.
- * Refresh token needs `user-read-currently-playing` (and usually `user-read-playback-state`).
- */
-
 const POLL_MS = 30_000
 
 function resolveNowPlayingUrl() {
@@ -183,10 +170,7 @@ export function SpotifyNowPlaying() {
       return (
         <>
           <p className="spotify-now__label">
-            <span className="spotify-now__preface">Currently listening on</span>
-            <span className="spotify-now__brand-group">
-              <span className="spotify-now__brand">Spotify</span>
-            </span>
+            <span className="spotify-now__preface">Listening on Spotify</span>
           </p>
           <p className="spotify-now__track">Nothing playing</p>
         </>
@@ -196,10 +180,7 @@ export function SpotifyNowPlaying() {
       return (
         <>
           <p className="spotify-now__label">
-            <span className="spotify-now__preface">Currently listening on</span>
-            <span className="spotify-now__brand-group">
-              <span className="spotify-now__brand">Spotify</span>
-            </span>
+            <span className="spotify-now__preface">Listening on Spotify</span>
           </p>
           <p className="spotify-now__track">Unavailable</p>
           <p className="spotify-now__hint">{configHint}</p>
@@ -209,10 +190,7 @@ export function SpotifyNowPlaying() {
     return (
       <>
         <p className="spotify-now__label">
-          <span className="spotify-now__preface">Currently listening on</span>
-          <span className="spotify-now__brand-group">
-            <span className="spotify-now__brand">Spotify</span>
-          </span>
+          <span className="spotify-now__preface">Listening on Spotify</span>
         </p>
         <p className="spotify-now__track">Unavailable</p>
       </>
