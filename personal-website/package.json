@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "spotify:refresh-token": "node scripts/get-spotify-refresh-token.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",

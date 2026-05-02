@@ -59,7 +59,13 @@ const REQUIRED = [
  * @returns {Promise<{ status: number; body: unknown | null }>}
  */
 export async function getSpotifyCurrentlyPlayingHttp(env) {
-  const missing = REQUIRED.filter((k) => !env[k]?.trim())
+  const trimmed = { ...env }
+  for (const k of REQUIRED) {
+    const v = trimmed[k]
+    if (typeof v === 'string') trimmed[k] = v.trim()
+  }
+
+  const missing = REQUIRED.filter((k) => !trimmed[k])
   if (missing.length) {
     return {
       status: 503,
@@ -71,7 +77,7 @@ export async function getSpotifyCurrentlyPlayingHttp(env) {
   }
 
   try {
-    const tokens = await refreshAccessToken(env)
+    const tokens = await refreshAccessToken(trimmed)
     if (!tokens.access_token) {
       return {
         status: 502,

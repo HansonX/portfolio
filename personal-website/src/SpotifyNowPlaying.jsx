@@ -68,12 +68,14 @@ export function SpotifyNowPlaying() {
   const [loading, setLoading] = useState(Boolean(apiUrl))
   const [track, setTrack] = useState(null)
   const [idle, setIdle] = useState(false)
+  const [configHint, setConfigHint] = useState(null)
 
   useEffect(() => {
     let cancelled = false
 
     const load = async () => {
       try {
+        setConfigHint(null)
         const res = await fetch(apiUrl, {
           headers: { Accept: 'application/json' },
         })
@@ -90,6 +92,29 @@ export function SpotifyNowPlaying() {
           setTrack(null)
           setIdle(false)
           setLoading(false)
+          let parsed = null
+          try {
+            parsed = await res.json()
+          } catch {
+            /* HTML error page or empty body */
+          }
+          if (
+            res.status === 503 &&
+            Array.isArray(parsed?.missing) &&
+            parsed.missing.length
+          ) {
+            setConfigHint(
+              `Add in Vercel: ${parsed.missing.join(', ')} (then redeploy).`,
+            )
+            return
+          }
+          const errMsg = typeof parsed?.error === 'string' ? parsed.error : null
+          if (errMsg) {
+            setConfigHint(
+              errMsg.length > 320 ? `${errMsg.slice(0, 320)}…` : errMsg,
+            )
+            return
+          }
           return
         }
 
@@ -119,7 +144,9 @@ export function SpotifyNowPlaying() {
     if (loading) {
       return (
         <>
-          <p className="spotify-now__label">Spotify</p>
+          <p className="spotify-now__label">
+            <span className="spotify-now__preface">Listening on Spotify</span>
+          </p>
           <p className="spotify-now__track">Loading…</p>
         </>
       )
@@ -128,12 +155,14 @@ export function SpotifyNowPlaying() {
       return (
         <>
           <p className="spotify-now__label">
-            Spotify
-            {track.isPlaying ? (
-              <span className="spotify-now__live" title="Playing">
-                <span className="spotify-now__dot" />
-              </span>
-            ) : null}
+            <span className="spotify-now__preface">Listening on Spotify</span>
+            <span className="spotify-now__brand-group">
+              {track.isPlaying ? (
+                <span className="spotify-now__live" title="Playing">
+                  <span className="spotify-now__dot" />
+                </span>
+              ) : null}
+            </span>
           </p>
           <p className="spotify-now__track">
             {track.url ? (
@@ -153,14 +182,38 @@ export function SpotifyNowPlaying() {
     if (idle) {
       return (
         <>
-          <p className="spotify-now__label">Spotify</p>
+          <p className="spotify-now__label">
+            <span className="spotify-now__preface">Currently listening on</span>
+            <span className="spotify-now__brand-group">
+              <span className="spotify-now__brand">Spotify</span>
+            </span>
+          </p>
           <p className="spotify-now__track">Nothing playing</p>
+        </>
+      )
+    }
+    if (configHint) {
+      return (
+        <>
+          <p className="spotify-now__label">
+            <span className="spotify-now__preface">Currently listening on</span>
+            <span className="spotify-now__brand-group">
+              <span className="spotify-now__brand">Spotify</span>
+            </span>
+          </p>
+          <p className="spotify-now__track">Unavailable</p>
+          <p className="spotify-now__hint">{configHint}</p>
         </>
       )
     }
     return (
       <>
-        <p className="spotify-now__label">Spotify</p>
+        <p className="spotify-now__label">
+          <span className="spotify-now__preface">Currently listening on</span>
+          <span className="spotify-now__brand-group">
+            <span className="spotify-now__brand">Spotify</span>
+          </span>
+        </p>
         <p className="spotify-now__track">Unavailable</p>
       </>
     )
