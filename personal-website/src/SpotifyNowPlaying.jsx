@@ -91,7 +91,7 @@ export function SpotifyNowPlaying() {
             parsed.missing.length
           ) {
             setConfigHint(
-              `Add in Vercel: ${parsed.missing.join(', ')} (then redeploy).`,
+              `add in vercel: ${parsed.missing.join(', ')} (then redeploy).`,
             )
             return
           }
@@ -132,9 +132,9 @@ export function SpotifyNowPlaying() {
       return (
         <>
           <p className="spotify-now__label">
-            <span className="spotify-now__preface">Listening on Spotify</span>
+            <span className="spotify-now__preface">listening on spotify</span>
           </p>
-          <p className="spotify-now__track">Loading…</p>
+          <p className="spotify-now__track">loading…</p>
         </>
       )
     }
@@ -142,10 +142,10 @@ export function SpotifyNowPlaying() {
       return (
         <>
           <p className="spotify-now__label">
-            <span className="spotify-now__preface">Listening on Spotify</span>
+            <span className="spotify-now__preface">listening on spotify</span>
             <span className="spotify-now__brand-group">
               {track.isPlaying ? (
-                <span className="spotify-now__live" title="Playing">
+                <span className="spotify-now__live" title="playing">
                   <span className="spotify-now__dot" />
                 </span>
               ) : null}
@@ -170,9 +170,9 @@ export function SpotifyNowPlaying() {
       return (
         <>
           <p className="spotify-now__label">
-            <span className="spotify-now__preface">Listening on Spotify</span>
+            <span className="spotify-now__preface">listening on spotify</span>
           </p>
-          <p className="spotify-now__track">Nothing playing</p>
+          <p className="spotify-now__track">nothing playing</p>
         </>
       )
     }
@@ -180,9 +180,9 @@ export function SpotifyNowPlaying() {
       return (
         <>
           <p className="spotify-now__label">
-            <span className="spotify-now__preface">Listening on Spotify</span>
+            <span className="spotify-now__preface">listening on spotify</span>
           </p>
-          <p className="spotify-now__track">Unavailable</p>
+          <p className="spotify-now__track">unavailable</p>
           <p className="spotify-now__hint">{configHint}</p>
         </>
       )
@@ -190,15 +190,15 @@ export function SpotifyNowPlaying() {
     return (
       <>
         <p className="spotify-now__label">
-          <span className="spotify-now__preface">Listening on Spotify</span>
+          <span className="spotify-now__preface">listening on spotify</span>
         </p>
-        <p className="spotify-now__track">Unavailable</p>
+        <p className="spotify-now__track">unavailable</p>
       </>
     )
   })()
 
   return (
-    <aside className="spotify-now" aria-label="Spotify now playing">
+    <aside className="spotify-now" aria-label="spotify now playing">
       {track?.image ? (
         <img
           className="spotify-now__art"

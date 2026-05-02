@@ -1,15 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 
 const GREETINGS = ['hello', 'hi', 'hey', 'howdy', "what's up", "welcome", "greetings"]
-const NAME_LINE = 'Hanson'
+const NAME_LINE = 'hanson'
 const CHAR_MS = 52
 
 function pickGreeting() {
   return GREETINGS[Math.floor(Math.random() * GREETINGS.length)]
-}
-
-function capitalizeFirst(s) {
-  return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 function delay(ms) {
@@ -27,7 +23,7 @@ export function WelcomeTyping() {
   const config = useMemo(() => {
     const word = pickGreeting()
     return {
-      greetingLine: `${capitalizeFirst(word)}, I'm`,
+      greetingLine: `${word}, i'm`,
       nameLine: NAME_LINE,
     }
   }, [])

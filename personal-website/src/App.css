@@ -9,7 +9,7 @@ html {
 }
 
 .section {
-  padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 2rem);
+  padding: clamp(1.5rem, 4vw, 2.25rem) clamp(1.25rem, 5vw, 2rem);
 }
 
 .section__inner {
@@ -31,9 +31,9 @@ html {
   justify-content: center;
   position: relative;
   box-sizing: border-box;
-  min-height: clamp(14rem, 38vh, 22rem);
-  padding-top: clamp(1.25rem, 4vw, 2rem);
-  padding-bottom: clamp(1.25rem, 4vw, 2rem);
+  min-height: clamp(12rem, 32vh, 18rem);
+  padding-top: clamp(0.85rem, 3vw, 1.35rem);
+  padding-bottom: clamp(0.85rem, 3vw, 1.35rem);
   text-align: center;
 }
 
@@ -50,7 +50,6 @@ html {
   margin: 0 0 0.5rem;
   font-size: clamp(1.2rem, 3vw, 1.7rem);
   letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: color-mix(in srgb, currentColor 55%, transparent);
 }
 
@@ -143,11 +142,6 @@ html {
   line-height: 1.6;
   color: color-mix(in srgb, currentColor 78%, transparent);
   max-width: 36rem;
-}
-
-.section--about,
-.section--experiences {
-  border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
 }
 
 .section h2 {
@@ -250,9 +244,8 @@ html {
 
 .section--footer {
   margin-top: auto;
-  border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
-  padding-top: clamp(3rem, 8vw, 5rem);
-  padding-bottom: clamp(3rem, 8vw, 5rem);
+  padding-top: clamp(1.5rem, 4vw, 2.25rem);
+  padding-bottom: clamp(1.5rem, 4vw, 2.25rem);
 }
 
 .footer__title {
@@ -283,14 +276,8 @@ html {
   margin: 0;
   font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, currentColor 60%, transparent);
-}
-
-.footer__subheader--lowercase {
-  text-transform: none;
   letter-spacing: 0.04em;
+  color: color-mix(in srgb, currentColor 60%, transparent);
 }
 
 .footer__links {

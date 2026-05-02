@@ -3,9 +3,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: #1a1d26;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -22,13 +22,79 @@ a:hover {
   color: #535bf2;
 }
 
+html {
+  background-color: #ffffff;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: transparent;
+  color: inherit;
+  text-transform: lowercase;
+}
+
+/* Faint moving gradient behind page content */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -15%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 55% 45% at 20% 30%,
+      color-mix(in srgb, #7c9cff 22%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 50% 50% at 85% 20%,
+      color-mix(in srgb, #e8a8d8 18%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 60% 55% at 70% 85%,
+      color-mix(in srgb, #9ee4d4 16%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 45% 40% at 10% 90%,
+      color-mix(in srgb, #ffd4a8 14%, transparent),
+      transparent 65%
+    );
+  animation: ambient-gradient-drift 28s ease-in-out infinite alternate;
+}
+
+@keyframes ambient-gradient-drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(4%, -3%) rotate(2deg) scale(1.04);
+  }
+  50% {
+    transform: translate(-3%, 2%) rotate(-1deg) scale(1.02);
+  }
+  75% {
+    transform: translate(2%, 4%) rotate(1deg) scale(1.05);
+  }
+  100% {
+    transform: translate(-2%, -2%) rotate(0deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+    transform: none;
+    inset: 0;
+  }
 }
 
 #root {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
 }
 
@@ -44,7 +110,8 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #f0f2f7;
+  color: #1a1d26;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -54,17 +121,4 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
